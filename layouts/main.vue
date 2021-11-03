@@ -36,7 +36,7 @@
         </b-collapse>
       </b-navbar>
     </header>
-    <b-row class="d-flex main-row">
+    <div class="d-flex main-row">
       <div class="d-flex flex-column flex-shrink-0 bg-light" style="width: 280px;">
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item">
@@ -75,7 +75,7 @@
       <main class="">
         <Nuxt />
       </main>
-    </b-row>
+    </div>
   </div>
 </template>
 
