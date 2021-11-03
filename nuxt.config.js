@@ -38,11 +38,34 @@ export default {
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/apollo'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
+
+  apollo: {
+    tokenName: 'auth._token.apollo',
+    authenticationType: '',
+    clientConfigs: {
+      default: {
+        tokenName: 'auth._token.apollo',
+        httpEndpoint: 'https://dev-api.richcrews.com/graphql',
+
+        // You can use `wss` for secure connection (recommended in production)
+        // Use `null` to disable subscriptions
+        wsEndpoint: null,
+
+        // Enable Automatic Query persisting with Apollo Engine
+        persisting: false,
+
+        // Use websockets for everything (no HTTP)
+        // You need to pass a `wsEndpoint` for this to work
+        websocketsOnly: false
+      }
+    }
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

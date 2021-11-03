@@ -1,99 +1,37 @@
 <template>
-  <div>
+  <b-container>
     <b-jumbotron header="Products" lead="Bootstrap v4 Components for Vue.js 2">
       <p>For more information visit website</p>
     </b-jumbotron>
 
-    <b-container>
-      <b-row>
-        <b-col>
-          <b-card
-            title="Card Title"
-            img-src="https://picsum.photos/600/300/?image=25"
-            img-alt="Image"
-            img-top
-            tag="article"
-            style="max-width: 20rem;"
-            class="mb-2"
-          >
-            <b-card-text>
-              Some quick example text to build on the card title and make up the bulk of the card's content.
-            </b-card-text>
-
-            <b-button href="#" variant="primary">
-              Go somewhere
-            </b-button>
-          </b-card>
-        </b-col>
-        <b-col>
-          <b-card
-            title="Card Title"
-            img-src="https://picsum.photos/600/300/?image=25"
-            img-alt="Image"
-            img-top
-            tag="article"
-            style="max-width: 20rem;"
-            class="mb-2"
-          >
-            <b-card-text>
-              Some quick example text to build on the card title and make up the bulk of the card's content.
-            </b-card-text>
-
-            <b-button href="#" variant="primary">
-              Go somewhere
-            </b-button>
-          </b-card>
-        </b-col>
-        <b-col>
-          <b-card
-            title="Card Title"
-            img-src="https://picsum.photos/600/300/?image=25"
-            img-alt="Image"
-            img-top
-            tag="article"
-            style="max-width: 20rem;"
-            class="mb-2"
-          >
-            <b-card-text>
-              Some quick example text to build on the card title and make up the bulk of the card's content.
-            </b-card-text>
-
-            <b-button href="#" variant="primary">
-              Go somewhere
-            </b-button>
-          </b-card>
-        </b-col>
-        <b-col>
-          <b-card
-            title="Card Title"
-            img-src="https://picsum.photos/600/300/?image=25"
-            img-alt="Image"
-            img-top
-            tag="article"
-            style="max-width: 20rem;"
-            class="mb-2"
-          >
-            <b-card-text>
-              Some quick example text to build on the card title and make up the bulk of the card's content.
-            </b-card-text>
-
-            <b-button href="#" variant="primary">
-              Go somewhere
-            </b-button>
-          </b-card>
-        </b-col>
-      </b-row>
-    </b-container>
-  </div>
+    <!-- <b-table striped hover :items="products" /> -->
+    {{ products }}
+  </b-container>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue } from "nuxt-property-decorator";
 
 @Component({
-  layout: 'default'
+  layout: "main",
+  apollo: {
+    products: {
+      prefetch: false,
+      query: require('@/gql/products.gql'),
+      variables (): any {
+        return {
+          "searchProductsInput": {
+            "pagination": {
+              "page": 1,
+              "count": 10
+            }
+          }
+        }
+      }
+    }
+  }
 })
 export default class Products extends Vue {
-
+  products: any[] = []
 }
 </script>

@@ -1,0 +1,41 @@
+query products($searchProductsInput: SearchProductsInput) {
+  products(searchProductsInput: $searchProductsInput) {
+    count
+    list {
+      _id
+      name {
+        en
+        ko
+      }
+      category
+      sub_category
+      imageUrl
+      #company
+      upc_code
+      product_code
+      rating
+      priceInfos {
+        #_id
+        provider
+        month
+        price
+      }
+      nutrients {
+        key
+        name_en
+        name_ko
+        value
+      }
+      additional {
+        capability
+        oneDaySize
+        risk
+        certification
+        extract
+      }
+      commentCount
+      updatedAt
+      createdAt
+    }
+  }
+}
