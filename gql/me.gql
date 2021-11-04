@@ -1,0 +1,15 @@
+query me {
+  me {
+    _id
+    provider
+    email
+    username
+    profile
+    gender
+    age
+    role
+    droppedAt
+    updatedAt
+    createdAt
+  }
+}

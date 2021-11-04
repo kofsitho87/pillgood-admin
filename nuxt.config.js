@@ -39,15 +39,37 @@ export default {
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    '@nuxtjs/apollo'
+    '@nuxtjs/apollo',
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/auth-next'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
 
+  auth: {
+    strategies: {
+      apollo: {
+        scheme: '~/plugins/apollo-auth.js',
+        token: {
+          type: ''
+        }
+      }
+    },
+    redirect: {
+      login: '/auth/login',
+      callback: '/callback',
+      logout: '/auth/login',
+      home: '/'
+    },
+    // cookie: false,
+    resetOnError: true
+  },
+
   apollo: {
     tokenName: 'auth._token.apollo',
     authenticationType: '',
+    cookieAttributes: null,
     clientConfigs: {
       default: {
         tokenName: 'auth._token.apollo',

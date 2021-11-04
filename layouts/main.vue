@@ -2,20 +2,21 @@
   <div id="app">
     <header>
       <b-navbar toggleable="lg" type="dark" variant="info">
-        <b-navbar-brand href="#">
-          NavBar
+        <b-navbar-brand to="/">
+          Home
         </b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse" />
 
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
-            <b-nav-item href="#">
-              Link
-            </b-nav-item>
-            <b-nav-item href="#" disabled>
-              Disabled
-            </b-nav-item>
+            <nuxt-link to="/products" class="nav-link link-dark">
+              <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid" /></svg>
+              Products
+            </nuxt-link>
+            <nuxt-link to="/users" class="nav-link link-dark">
+              Users
+            </nuxt-link>
           </b-navbar-nav>
 
           <!-- Right aligned nav items -->
@@ -23,12 +24,9 @@
             <b-nav-item-dropdown right>
               <!-- Using 'button-content' slot -->
               <template #button-content>
-                <em>User</em>
+                <em>{{ user.username }}</em>
               </template>
-              <b-dropdown-item href="#">
-                Profile
-              </b-dropdown-item>
-              <b-dropdown-item href="#">
+              <b-dropdown-item @click="logoutAction">
                 Sign Out
               </b-dropdown-item>
             </b-nav-item-dropdown>
@@ -36,7 +34,10 @@
         </b-collapse>
       </b-navbar>
     </header>
-    <div class="d-flex main-row">
+    <main class="py-2">
+      <Nuxt />
+    </main>
+    <!-- <div class="d-flex main-row">
       <div class="d-flex flex-column flex-shrink-0 bg-light" style="width: 280px;">
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item">
@@ -75,9 +76,25 @@
       <main class="">
         <Nuxt />
       </main>
-    </div>
+    </div> -->
   </div>
 </template>
+
+<script lang="ts">
+import 'vue-apollo'
+import { Component, Vue } from 'nuxt-property-decorator'
+@Component({})
+export default class LayoutMain extends Vue {
+  get user (): any {
+    return this.$auth.user
+  }
+
+  async logoutAction () {
+    await this.$auth.logout()
+    this.$router.push({ name: 'auth-login' })
+  }
+}
+</script>
 
 <style scoped>
 .main-row {
