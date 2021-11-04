@@ -19,6 +19,7 @@ query products($searchProductsInput: SearchProductsInput) {
         provider
         month
         price
+        link
       }
       nutrients {
         key
@@ -33,7 +34,6 @@ query products($searchProductsInput: SearchProductsInput) {
         certification
         extract
       }
-      commentCount
       updatedAt
       createdAt
     }

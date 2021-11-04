@@ -1,10 +1,17 @@
 <template>
   <b-container>
-    <b-jumbotron header="Products" lead="Bootstrap v4 Components for Vue.js 2">
-      <p>For more information visit website</p>
+    <b-jumbotron header="Products" class="py-4">
+      <p>상품 열을 클릭하면 상세페이지로 들어갈 수 있습니다.</p>
     </b-jumbotron>
 
     <div class="pb-4">
+      <b-form @submit.prevent="searchProductsAction">
+        <b-form-input
+          v-model="keywordText"
+          type="search"
+          placeholder="검색어를 입력해주세요.(상품명 검색가능)"
+        />
+      </b-form>
       <b-table
         id="my-table"
         caption-top
@@ -17,11 +24,14 @@
         @row-clicked="goDetail"
       >
         <template #table-caption>
-          총 {{ products.count | comma }}개
+          총 {{ products.count | COMMA }}개
+        </template>
+        <template #cell(imageUrl)="data">
+          <b-img v-bind="{ blank: false, blankColor: '#777', width: 100, class: 'd-block' }" rounded :src="data.value" />
         </template>
         <template #cell(priceInfos)="data">
           {{ data.value[0].provider }}<br>
-          {{ data.value[0].price | comma }}원<br>
+          {{ data.value[0].price | COMMA }}원<br>
         </template>
       </b-table>
       <b-pagination
@@ -50,6 +60,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
       variables (): any {
         return {
           searchProductsInput: {
+            keyword: this.keyword,
             pagination: {
               page: this.currentPage,
               count: 50
@@ -57,11 +68,6 @@ import { Component, Vue } from 'nuxt-property-decorator'
           }
         }
       }
-    }
-  },
-  filters: {
-    comma (val: string) {
-      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     }
   }
 })
@@ -76,13 +82,30 @@ export default class Products extends Vue {
     count: 0
   }
 
+  keywordText = '';
+  keyword: string|null = null;
   currentPage = 1;
   perPage = 50;
 
-  fields: string[] = ['name.en', 'name.ko', 'category', 'sub_category', 'product_code', 'upc_code', 'priceInfos']
+  fields: string[] = ['imageUrl', 'name.en', 'name.ko', 'category', 'sub_category', 'product_code', 'upc_code', 'priceInfos']
 
   changePageAction (page: number) {
     this.currentPage = page
+  }
+
+  searchProductsAction () {
+    this.currentPage = 1
+    this.keyword = this.keywordText
+
+    // this.$apollo.queries.products.refetch({
+    //   searchProductsInput: {
+    //     keyword: this.keyword,
+    //     pagination: {
+    //       page: this.currentPage,
+    //       count: this.perPage
+    //     }
+    //   }
+    // })
   }
 
   goDetail (product: any) {

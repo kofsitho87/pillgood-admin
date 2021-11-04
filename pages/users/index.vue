@@ -1,7 +1,7 @@
 <template>
   <b-container>
-    <b-jumbotron header="Users" lead="Bootstrap v4 Components for Vue.js 2">
-      <p>For more information visit website</p>
+    <b-jumbotron header="Accounts" class="py-4">
+      <!-- <p>For more information visit website</p> -->
     </b-jumbotron>
 
     <div class="pb-4">
@@ -11,20 +11,22 @@
         responsive
         bordered
         hover
-        :items="users.list"
+        :items="accounts.list"
         :fields="fields"
       >
         <template #table-caption>
-          총 {{ users.count | comma }}개
+          총 {{ accounts.count | COMMA }}개
         </template>
-        <!-- <template #cell(priceInfos)="data">
-          {{ data.value[0].provider }}<br>
-          {{ data.value[0].price | comma }}원<br>
-        </template> -->
+        <template #cell(profile)="data">
+          <b-avatar :src="data.profile" />
+        </template>
+        <template #cell(createdAt)="data">
+          {{ data.value | YYYYMMDD }}
+        </template>
       </b-table>
       <b-pagination
         v-model="currentPage"
-        :total-rows="users.count"
+        :total-rows="accounts.count"
         :per-page="perPage"
         aria-controls="my-table"
         @change="changePageAction"
@@ -40,30 +42,25 @@ import { Component, Vue } from 'nuxt-property-decorator'
   auth: true,
   middleware: ['auth'],
   layout: 'main',
-  // apollo: {
-  //   products: {
-  //     prefetch: false,
-  //     query: require('@/gql/users.gql'),
-  //     variables (): any {
-  //       return {
-  //         searchProductsInput: {
-  //           pagination: {
-  //             page: this.currentPage,
-  //             count: this.perPage
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-  filters: {
-    comma (val: string) {
-      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  apollo: {
+    accounts: {
+      prefetch: false,
+      query: require('@/gql/accounts.gql'),
+      variables (): any {
+        return {
+          searchAccountsInput: {
+            pagination: {
+              page: this.currentPage,
+              count: this.perPage
+            }
+          }
+        }
+      }
     }
   }
 })
 export default class Users extends Vue {
-  users: {
+  accounts: {
     list: any[],
     count: number
   } = {
@@ -72,9 +69,9 @@ export default class Users extends Vue {
   }
 
   currentPage = 1;
-  perPage = 50;
+  perPage = 20;
 
-  fields: string[] = ['name.en', 'name.ko', 'category', 'sub_category', 'product_code', 'upc_code', 'priceInfos']
+  fields: string[] = ['_id', 'profile', 'username', 'email', 'role', 'provider', 'gender', 'age', 'createdAt']
 
   changePageAction (page: number) {
     this.currentPage = page

@@ -17,6 +17,9 @@
             <nuxt-link to="/users" class="nav-link link-dark">
               Users
             </nuxt-link>
+            <nuxt-link to="/drvs" class="nav-link link-dark">
+              Drvs
+            </nuxt-link>
           </b-navbar-nav>
 
           <!-- Right aligned nav items -->

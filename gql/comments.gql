@@ -1,0 +1,26 @@
+query comments($searchCommentsInput: SearchCommentsInput!) {
+  comments(searchCommentsInput: $searchCommentsInput) {
+    count
+    list {
+      _id
+      account {
+        _id
+        username
+        profile
+        email
+        provider
+      }
+      productId
+      content
+      effectRating
+      costEffectRating
+      troubleRating
+      convenienceRating
+      likeCount
+      avgRating
+      rePurchaseRating
+      updatedAt
+      createdAt
+    }
+  }
+}

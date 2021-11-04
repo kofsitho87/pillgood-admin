@@ -1,3 +1,6 @@
+require('dotenv').config({
+  path: `./env/.env.${process.env.ENV ? process.env.ENV.toLowerCase() : 'dev'}`
+})
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -22,6 +25,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '~/plugins/filters', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -73,7 +77,7 @@ export default {
     clientConfigs: {
       default: {
         tokenName: 'auth._token.apollo',
-        httpEndpoint: 'https://dev-api.richcrews.com/graphql',
+        httpEndpoint: process.env.API_URL,
 
         // You can use `wss` for secure connection (recommended in production)
         // Use `null` to disable subscriptions

@@ -1,0 +1,18 @@
+query accounts($searchAccountsInput: SearchAccountsInput) {
+  accounts(searchAccountsInput: $searchAccountsInput) {
+    count
+    list {
+      _id
+      provider
+      email
+      username
+      profile
+      gender
+      age
+      role
+      droppedAt
+      updatedAt
+      createdAt
+    }
+  }
+}
